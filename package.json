@@ -1,0 +1,13 @@
+{
+  "name": "linktree-clone",
+  "version": "1.0.0",
+  "description": "Linktree Clone Application",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "cd server && node index.js",
+    "install": "cd server && npm install"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
