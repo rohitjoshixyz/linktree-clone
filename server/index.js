@@ -5,14 +5,8 @@ require('dotenv').config();
 
 const app = express();
 
-// CORS configuration
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  optionsSuccessStatus: 200
-};
-
 // Middleware
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 // MongoDB Connection
@@ -30,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5001;
+const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 }); 
