@@ -24,10 +24,36 @@ app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/linktree-clone', {
-  dbName: 'linktree-clone'  // Explicitly set the database name
+  dbName: 'linktree-clone',
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+  connectTimeoutMS: 10000,
+  retryWrites: true,
+  maxPoolSize: 10,
+  minPoolSize: 2
 })
   .then(() => console.log('MongoDB Connected to linktree-clone database'))
-  .catch(err => console.log('MongoDB Connection Error:', err));
+  .catch(err => {
+    console.error('MongoDB Connection Error:', err);
+    process.exit(1);  // Exit if we can't connect to the database
+  });
+
+// Add connection error handler
+mongoose.connection.on('error', err => {
+  console.error('MongoDB connection error:', err);
+});
+
+// Add disconnection handler
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB disconnected. Attempting to reconnect...');
+});
+
+// Add successful reconnection handler
+mongoose.connection.on('reconnected', () => {
+  console.log('MongoDB reconnected successfully');
+});
 
 // Routes
 const linksRouter = require('./routes/links');
