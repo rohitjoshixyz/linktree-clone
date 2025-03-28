@@ -57,15 +57,22 @@ function App() {
         <header className="text-center mb-12">
           <div className="relative inline-block mb-4">
             <img
-              src="https://via.placeholder.com/150"
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=RohitJoshi"
               alt="Profile"
               className="w-32 h-32 rounded-full mx-auto border-4 border-purple-500 shadow-xl hover:border-purple-400 transition-all duration-300"
             />
             <div className="absolute -bottom-2 -right-2 w-5 h-5 bg-green-500 rounded-full border-2 border-gray-900"></div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Your Name</h1>
-          <p className="text-gray-400 text-lg mb-1">@yourusername</p>
-          <p className="text-gray-500">Digital Creator & Developer</p>
+          <h1 className="text-3xl font-bold text-white mb-2">Rohit Joshi</h1>
+          <a 
+            href="https://twitter.com/Rohit_V_Joshi" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-gray-400 text-lg mb-1 hover:text-purple-400 transition-colors duration-300"
+          >
+            @Rohit_V_Joshi
+          </a>
+          <p className="text-gray-500">Software Engineer @ Circle</p>
         </header>
 
         <div className="space-y-4 w-full max-w-lg mx-auto px-4">
@@ -89,7 +96,7 @@ function App() {
         </div>
 
         <footer className="mt-12 text-center text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} Your Name. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Rohit Joshi. All rights reserved.</p>
         </footer>
       </div>
     </div>
