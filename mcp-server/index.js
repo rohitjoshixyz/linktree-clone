@@ -5,7 +5,7 @@ const basicAuth = require('basic-auth');
 const axios = require('axios');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -20,6 +20,27 @@ const auth = (req, res, next) => {
   }
   next();
 };
+
+// SSE endpoint for real-time communication
+app.get('/mcp/events', auth, (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  // Send initial connection message
+  res.write('event: connect\ndata: Connected to MCP Server\n\n');
+
+  // Send a ping every 30 seconds to keep the connection alive
+  const pingInterval = setInterval(() => {
+    res.write('event: ping\ndata: ping\n\n');
+  }, 30000);
+
+  // Clean up on client disconnect
+  req.on('close', () => {
+    clearInterval(pingInterval);
+  });
+});
 
 // Routes
 app.post('/mcp/create-link', auth, async (req, res) => {
