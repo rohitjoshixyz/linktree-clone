@@ -71,6 +71,86 @@ REACT_APP_API_URL=http://localhost:5002
 npm start
 ```
 
+## MCP Server Setup
+
+The project includes a Model Control Protocol (MCP) server for demonstrating link management functionality.
+
+### Features
+- Create new links
+- Delete existing links
+- Basic authentication
+- Health check endpoint
+
+### Setup
+1. Navigate to the mcp-server directory:
+```bash
+cd mcp-server
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Configure environment variables:
+- Create a `.env` file with the following variables:
+  - `PORT`: Server port (default: 3001)
+  - `LINKTREE_API_URL`: Your deployed Linktree API URL
+  - `MCP_USERNAME`: Username for basic auth
+  - `MCP_PASSWORD`: Password for basic auth
+
+4. Start the server:
+```bash
+npm start
+```
+
+### API Endpoints
+
+#### Create Link
+```http
+POST /mcp/create-link
+Authorization: Basic <base64(username:password)>
+Content-Type: application/json
+
+{
+  "title": "My Link",
+  "url": "https://example.com"
+}
+```
+
+#### Delete Link
+```http
+DELETE /mcp/delete-link/:id
+Authorization: Basic <base64(username:password)>
+```
+
+#### Health Check
+```http
+GET /mcp/health
+```
+
+### Example Usage with cURL
+
+#### Create a Link
+```bash
+curl -X POST http://localhost:3001/mcp/create-link \
+  -H "Authorization: Basic $(echo -n 'admin:password' | base64)" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "GitHub", "url": "https://github.com"}'
+```
+
+#### Delete a Link
+```bash
+curl -X DELETE http://localhost:3001/mcp/delete-link/123 \
+  -H "Authorization: Basic $(echo -n 'admin:password' | base64)"
+```
+
+### Security Notes
+- Always use HTTPS in production
+- Change the default username and password
+- Consider implementing rate limiting
+- Use environment variables for sensitive data
+
 ## API Endpoints
 
 ### Links
@@ -107,6 +187,10 @@ linktree-clone/
 │   ├── routes/
 │   ├── index.js
 │   └── package.json
+├── mcp-server/          # MCP server for demonstrations
+│   ├── index.js
+│   ├── package.json
+│   └── .env
 └── README.md
 ```
 
